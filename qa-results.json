@@ -1,0 +1,626 @@
+﻿[
+    {
+        "Name":  "GET employees",
+        "Method":  "GET",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  200,
+        "Actual":  200,
+        "Pass":  false,
+        "Response":  {
+                         "value":  [
+                                       {
+                                           "id":  1,
+                                           "firstName":  "Peter",
+                                           "lastName":  "Mugisha",
+                                           "names":  "Peter Mugisha",
+                                           "email":  "peter.mugisha@gov.rw",
+                                           "district":  "Gasabo",
+                                           "mobile":  "+250788000001",
+                                           "dateOfBirth":  "1990-05-15",
+                                           "employeeId":  "EMP-001",
+                                           "department":  "Finance",
+                                           "position":  "Accountant",
+                                           "salary":  700000.00,
+                                           "status":  "ACTIVE",
+                                           "joiningDate":  "2018-03-01"
+                                       },
+                                       {
+                                           "id":  2,
+                                           "firstName":  "Alice",
+                                           "lastName":  "Uwase",
+                                           "names":  "Alice Uwase",
+                                           "email":  "alice.uwase@gov.rw",
+                                           "district":  "Kicukiro",
+                                           "mobile":  "+250788000002",
+                                           "dateOfBirth":  "1988-08-20",
+                                           "employeeId":  "EMP-002",
+                                           "department":  "Human Resources",
+                                           "position":  "HR Officer",
+                                           "salary":  550000.00,
+                                           "status":  "ACTIVE",
+                                           "joiningDate":  "2019-06-15"
+                                       },
+                                       {
+                                           "id":  3,
+                                           "firstName":  "Jean",
+                                           "lastName":  "Habimana",
+                                           "names":  "Jean Habimana",
+                                           "email":  "jean.habimana@gov.rw",
+                                           "district":  "Nyarugenge",
+                                           "mobile":  "+250788000003",
+                                           "dateOfBirth":  "1985-01-10",
+                                           "employeeId":  "EMP-003",
+                                           "department":  "IT",
+                                           "position":  "Systems Analyst",
+                                           "salary":  600000.00,
+                                           "status":  "INACTIVE",
+                                           "joiningDate":  "2015-01-10"
+                                       }
+                                   ],
+                         "Count":  3
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "POST employee valid",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  201,
+        "Actual":  201,
+        "Pass":  true,
+        "Response":  {
+                         "id":  5,
+                         "firstName":  "Test",
+                         "lastName":  "Active",
+                         "names":  "Test Active",
+                         "email":  "test.active.qa@gov.rw",
+                         "district":  "Gasabo",
+                         "mobile":  "+250788999001",
+                         "dateOfBirth":  "1995-01-15",
+                         "employeeId":  "EMP-QA-001",
+                         "department":  "Finance",
+                         "position":  "Analyst",
+                         "salary":  700000,
+                         "status":  "ACTIVE",
+                         "joiningDate":  "2024-01-01"
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "POST duplicate employeeId",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  409,
+        "Actual":  409,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Conflict",
+                         "message":  "Employee ID already exists: EMP-QA-001",
+                         "timestamp":  "2026-06-19T02:17:53.7324164",
+                         "status":  409
+                     },
+        "Error":  "The remote server returned an error: (409) Conflict."
+    },
+    {
+        "Name":  "POST duplicate email",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  409,
+        "Actual":  409,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Conflict",
+                         "message":  "Employee with email already exists: test.active.qa@gov.rw",
+                         "timestamp":  "2026-06-19T02:17:53.7573481",
+                         "status":  409
+                     },
+        "Error":  "The remote server returned an error: (409) Conflict."
+    },
+    {
+        "Name":  "POST invalid email",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  400,
+        "Actual":  400,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Validation Failed",
+                         "message":  "Request validation failed. Please correct the highlighted fields.",
+                         "errors":  {
+                                        "email":  "must be a well-formed email address"
+                                    },
+                         "timestamp":  "2026-06-19T02:17:53.776353",
+                         "status":  400
+                     },
+        "Error":  "The remote server returned an error: (400) Bad Request."
+    },
+    {
+        "Name":  "POST missing fields",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  400,
+        "Actual":  400,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Validation Failed",
+                         "message":  "Request validation failed. Please correct the highlighted fields.",
+                         "errors":  {
+                                        "lastName":  "must not be blank",
+                                        "employeeId":  "must not be blank",
+                                        "position":  "must not be blank",
+                                        "salary":  "must not be null",
+                                        "department":  "must not be blank",
+                                        "email":  "must not be blank",
+                                        "status":  "must not be null"
+                                    },
+                         "timestamp":  "2026-06-19T02:17:53.7823535",
+                         "status":  400
+                     },
+        "Error":  "The remote server returned an error: (400) Bad Request."
+    },
+    {
+        "Name":  "POST negative salary",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  400,
+        "Actual":  400,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Validation Failed",
+                         "message":  "Request validation failed. Please correct the highlighted fields.",
+                         "errors":  {
+                                        "salary":  "must be greater than 0.0"
+                                    },
+                         "timestamp":  "2026-06-19T02:17:53.8132588",
+                         "status":  400
+                     },
+        "Error":  "The remote server returned an error: (400) Bad Request."
+    },
+    {
+        "Name":  "POST inactive employee",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  201,
+        "Actual":  201,
+        "Pass":  false,
+        "Response":  {
+                         "id":  6,
+                         "firstName":  "Test",
+                         "lastName":  "Inactive",
+                         "names":  "Test Inactive",
+                         "email":  "test.inactive.qa@gov.rw",
+                         "district":  "Kicukiro",
+                         "mobile":  "+250788999002",
+                         "dateOfBirth":  "1990-06-01",
+                         "employeeId":  "EMP-QA-INACTIVE",
+                         "department":  "IT",
+                         "position":  "Dev",
+                         "salary":  500000,
+                         "status":  "INACTIVE",
+                         "joiningDate":  "2023-06-01"
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "POST deduction valid",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/deductions",
+        "Expected":  201,
+        "Actual":  201,
+        "Pass":  false,
+        "Response":  {
+                         "id":  9,
+                         "name":  "QA_TestDed",
+                         "percentage":  10,
+                         "category":  "DEDUCTION",
+                         "active":  true
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "POST duplicate deduction",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/deductions",
+        "Expected":  409,
+        "Actual":  409,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Conflict",
+                         "message":  "Deduction already exists: QA_TestDed",
+                         "timestamp":  "2026-06-19T02:17:53.8638092",
+                         "status":  409
+                     },
+        "Error":  "The remote server returned an error: (409) Conflict."
+    },
+    {
+        "Name":  "POST invalid deduction %",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/deductions",
+        "Expected":  400,
+        "Actual":  400,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Validation Failed",
+                         "message":  "Request validation failed. Please correct the highlighted fields.",
+                         "errors":  {
+                                        "percentage":  "must be less than or equal to 100.0"
+                                    },
+                         "timestamp":  "2026-06-19T02:17:53.8696448",
+                         "status":  400
+                     },
+        "Error":  "The remote server returned an error: (400) Bad Request."
+    },
+    {
+        "Name":  "POST negative deduction %",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/deductions",
+        "Expected":  400,
+        "Actual":  400,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Validation Failed",
+                         "message":  "Request validation failed. Please correct the highlighted fields.",
+                         "errors":  {
+                                        "percentage":  "must be greater than or equal to 0.0"
+                                    },
+                         "timestamp":  "2026-06-19T02:17:53.8746456",
+                         "status":  400
+                     },
+        "Error":  "The remote server returned an error: (400) Bad Request."
+    },
+    {
+        "Name":  "POST payroll generate",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/payroll/generate",
+        "Expected":  201,
+        "Actual":  201,
+        "Pass":  false,
+        "Response":  {
+                         "value":  [
+                                       {
+                                           "id":  3,
+                                           "empId":  "EMP-001",
+                                           "name":  "Peter Mugisha",
+                                           "base":  700000.00,
+                                           "house":  98000.00,
+                                           "transport":  98000.00,
+                                           "gross":  896000.00,
+                                           "tax":  268800.00,
+                                           "pension":  53760.00,
+                                           "medical":  44800.00,
+                                           "other":  35840.00,
+                                           "netSalary":  492800.00,
+                                           "status":  "GENERATED",
+                                           "month":  7,
+                                           "year":  2026
+                                       },
+                                       {
+                                           "id":  4,
+                                           "empId":  "EMP-002",
+                                           "name":  "Alice Uwase",
+                                           "base":  550000.00,
+                                           "house":  77000.00,
+                                           "transport":  77000.00,
+                                           "gross":  704000.00,
+                                           "tax":  211200.00,
+                                           "pension":  42240.00,
+                                           "medical":  35200.00,
+                                           "other":  28160.00,
+                                           "netSalary":  387200.00,
+                                           "status":  "GENERATED",
+                                           "month":  7,
+                                           "year":  2026
+                                       },
+                                       {
+                                           "id":  5,
+                                           "empId":  "EMP-QA-001",
+                                           "name":  "Test Active",
+                                           "base":  700000.00,
+                                           "house":  98000.00,
+                                           "transport":  98000.00,
+                                           "gross":  896000.00,
+                                           "tax":  268800.00,
+                                           "pension":  53760.00,
+                                           "medical":  44800.00,
+                                           "other":  35840.00,
+                                           "netSalary":  492800.00,
+                                           "status":  "GENERATED",
+                                           "month":  7,
+                                           "year":  2026
+                                       }
+                                   ],
+                         "Count":  3
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "POST duplicate payroll",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/payroll/generate",
+        "Expected":  409,
+        "Actual":  409,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Conflict",
+                         "message":  "Payroll already exists for employee EMP-001 for 7/2026",
+                         "timestamp":  "2026-06-19T02:17:53.9405846",
+                         "status":  409
+                     },
+        "Error":  "The remote server returned an error: (409) Conflict."
+    },
+    {
+        "Name":  "GET payslips period",
+        "Method":  "GET",
+        "Url":  "http://localhost:8080/api/payroll/payslips?month=7\u0026year=2026",
+        "Expected":  200,
+        "Actual":  200,
+        "Pass":  false,
+        "Response":  {
+                         "value":  [
+                                       {
+                                           "id":  3,
+                                           "empId":  "EMP-001",
+                                           "name":  "Peter Mugisha",
+                                           "base":  700000.00,
+                                           "house":  98000.00,
+                                           "transport":  98000.00,
+                                           "gross":  896000.00,
+                                           "tax":  268800.00,
+                                           "pension":  53760.00,
+                                           "medical":  44800.00,
+                                           "other":  35840.00,
+                                           "netSalary":  492800.00,
+                                           "status":  "GENERATED",
+                                           "month":  7,
+                                           "year":  2026
+                                       },
+                                       {
+                                           "id":  4,
+                                           "empId":  "EMP-002",
+                                           "name":  "Alice Uwase",
+                                           "base":  550000.00,
+                                           "house":  77000.00,
+                                           "transport":  77000.00,
+                                           "gross":  704000.00,
+                                           "tax":  211200.00,
+                                           "pension":  42240.00,
+                                           "medical":  35200.00,
+                                           "other":  28160.00,
+                                           "netSalary":  387200.00,
+                                           "status":  "GENERATED",
+                                           "month":  7,
+                                           "year":  2026
+                                       },
+                                       {
+                                           "id":  5,
+                                           "empId":  "EMP-QA-001",
+                                           "name":  "Test Active",
+                                           "base":  700000.00,
+                                           "house":  98000.00,
+                                           "transport":  98000.00,
+                                           "gross":  896000.00,
+                                           "tax":  268800.00,
+                                           "pension":  53760.00,
+                                           "medical":  44800.00,
+                                           "other":  35840.00,
+                                           "netSalary":  492800.00,
+                                           "status":  "GENERATED",
+                                           "month":  7,
+                                           "year":  2026
+                                       }
+                                   ],
+                         "Count":  3
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "GET employee payslip",
+        "Method":  "GET",
+        "Url":  "http://localhost:8080/api/payroll/payslips/employee/1/7/2026",
+        "Expected":  200,
+        "Actual":  200,
+        "Pass":  false,
+        "Response":  {
+                         "id":  3,
+                         "empId":  "EMP-001",
+                         "name":  "Peter Mugisha",
+                         "base":  700000.00,
+                         "house":  98000.00,
+                         "transport":  98000.00,
+                         "gross":  896000.00,
+                         "tax":  268800.00,
+                         "pension":  53760.00,
+                         "medical":  44800.00,
+                         "other":  35840.00,
+                         "netSalary":  492800.00,
+                         "status":  "GENERATED",
+                         "month":  7,
+                         "year":  2026
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "GET messages period",
+        "Method":  "GET",
+        "Url":  "http://localhost:8080/api/payroll/messages?month=7\u0026year=2026",
+        "Expected":  200,
+        "Actual":  200,
+        "Pass":  false,
+        "Response":  {
+                         "value":  [
+                                       {
+                                           "id":  1,
+                                           "employeeId":  1,
+                                           "employeeName":  "Peter Mugisha",
+                                           "text":  "Dear Peter Mugisha, your salary for 7/2026 has been processed. Amount: 492800.00 RWF from Government of Rwanda ERP.",
+                                           "month":  7,
+                                           "year":  2026,
+                                           "dateTime":  "2026-06-19T02:17:53.899674"
+                                       },
+                                       {
+                                           "id":  2,
+                                           "employeeId":  2,
+                                           "employeeName":  "Alice Uwase",
+                                           "text":  "Dear Alice Uwase, your salary for 7/2026 has been processed. Amount: 387200.00 RWF from Government of Rwanda ERP.",
+                                           "month":  7,
+                                           "year":  2026,
+                                           "dateTime":  "2026-06-19T02:17:53.908789"
+                                       },
+                                       {
+                                           "id":  3,
+                                           "employeeId":  5,
+                                           "employeeName":  "Test Active",
+                                           "text":  "Dear Test Active, your salary for 7/2026 has been processed. Amount: 492800.00 RWF from Government of Rwanda ERP.",
+                                           "month":  7,
+                                           "year":  2026,
+                                           "dateTime":  "2026-06-19T02:17:53.912655"
+                                       }
+                                   ],
+                         "Count":  3
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "GET messages employee",
+        "Method":  "GET",
+        "Url":  "http://localhost:8080/api/payroll/messages/employee/1",
+        "Expected":  200,
+        "Actual":  200,
+        "Pass":  false,
+        "Response":  {
+                         "value":  [
+                                       {
+                                           "id":  1,
+                                           "employeeId":  1,
+                                           "employeeName":  "Peter Mugisha",
+                                           "text":  "Dear Peter Mugisha, your salary for 7/2026 has been processed. Amount: 492800.00 RWF from Government of Rwanda ERP.",
+                                           "month":  7,
+                                           "year":  2026,
+                                           "dateTime":  "2026-06-19T02:17:53.899674"
+                                       }
+                                   ],
+                         "Count":  1
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "GET messages invalid employee",
+        "Method":  "GET",
+        "Url":  "http://localhost:8080/api/payroll/messages/employee/99999",
+        "Expected":  404,
+        "Actual":  404,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Not Found",
+                         "message":  "Employee not found with id: 99999",
+                         "timestamp":  "2026-06-19T02:17:54.0466969",
+                         "status":  404
+                     },
+        "Error":  "The remote server returned an error: (404) Not Found."
+    },
+    {
+        "Name":  "POST payroll approve",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/payroll/approve",
+        "Expected":  200,
+        "Actual":  200,
+        "Pass":  false,
+        "Response":  {
+                         "value":  [
+                                       {
+                                           "id":  3,
+                                           "empId":  "EMP-001",
+                                           "name":  "Peter Mugisha",
+                                           "base":  700000.00,
+                                           "house":  98000.00,
+                                           "transport":  98000.00,
+                                           "gross":  896000.00,
+                                           "tax":  268800.00,
+                                           "pension":  53760.00,
+                                           "medical":  44800.00,
+                                           "other":  35840.00,
+                                           "netSalary":  492800.00,
+                                           "status":  "PAID",
+                                           "month":  7,
+                                           "year":  2026
+                                       },
+                                       {
+                                           "id":  4,
+                                           "empId":  "EMP-002",
+                                           "name":  "Alice Uwase",
+                                           "base":  550000.00,
+                                           "house":  77000.00,
+                                           "transport":  77000.00,
+                                           "gross":  704000.00,
+                                           "tax":  211200.00,
+                                           "pension":  42240.00,
+                                           "medical":  35200.00,
+                                           "other":  28160.00,
+                                           "netSalary":  387200.00,
+                                           "status":  "PAID",
+                                           "month":  7,
+                                           "year":  2026
+                                       },
+                                       {
+                                           "id":  5,
+                                           "empId":  "EMP-QA-001",
+                                           "name":  "Test Active",
+                                           "base":  700000.00,
+                                           "house":  98000.00,
+                                           "transport":  98000.00,
+                                           "gross":  896000.00,
+                                           "tax":  268800.00,
+                                           "pension":  53760.00,
+                                           "medical":  44800.00,
+                                           "other":  35840.00,
+                                           "netSalary":  492800.00,
+                                           "status":  "PAID",
+                                           "month":  7,
+                                           "year":  2026
+                                       }
+                                   ],
+                         "Count":  3
+                     },
+        "Error":  null
+    },
+    {
+        "Name":  "GET employee not found",
+        "Method":  "GET",
+        "Url":  "http://localhost:8080/api/employees/99999",
+        "Expected":  404,
+        "Actual":  404,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Not Found",
+                         "message":  "Employee not found with id: 99999",
+                         "timestamp":  "2026-06-19T02:17:54.0976981",
+                         "status":  404
+                     },
+        "Error":  "The remote server returned an error: (404) Not Found."
+    },
+    {
+        "Name":  "POST malformed JSON",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/employees",
+        "Expected":  400,
+        "Actual":  400,
+        "Pass":  true,
+        "Response":  null,
+        "Error":  null
+    },
+    {
+        "Name":  "POST duplicate user employee",
+        "Method":  "POST",
+        "Url":  "http://localhost:8080/api/users",
+        "Expected":  409,
+        "Actual":  409,
+        "Pass":  false,
+        "Response":  {
+                         "error":  "Conflict",
+                         "message":  "Employee already has a linked user account (employee id: 1).",
+                         "timestamp":  "2026-06-19T02:17:54.1256966",
+                         "status":  409
+                     },
+        "Error":  "The remote server returned an error: (409) Conflict."
+    }
+]
